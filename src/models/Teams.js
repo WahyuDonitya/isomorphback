@@ -10,11 +10,11 @@ const TeamsSchema = new Schema({
         type: String,
         required: true
       },
+      teamleader: String,
       teamMembers: [
         {
           name: String,
           value: String,
-          teamleader: String,
           status: Number
         }
       ],
