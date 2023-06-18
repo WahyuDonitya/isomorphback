@@ -24,10 +24,12 @@ const movieRouter = require("./src/routes/movie");
 const kategoriRouter = require("./src/routes/kategori");
 const authRouter = require("./src/routes/auth");
 const heroesRouter = require("./src/routes/heroes")
+const teamsRouter = require("./src/routes/teams")
 
 app.use("/api/v1/movie", movieRouter);
 app.use("/api/v1/kategori", kategoriRouter);
 app.use("/api/v1/heroes", heroesRouter);
+app.use("/api/v1/team", teamsRouter);
 app.use("/api/v1/auth", authRouter);
 
 const initApp = async () => {
