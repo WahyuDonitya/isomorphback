@@ -28,8 +28,27 @@ const getNamaHero = async (req,res) => {
     }
 }
 
+const addHero = async (req,res) => {
+    let hero = req.body;
+
+    const data = await Heroes.find().exec();
+    const length = data.length;
+
+    hero.id = length+1;
+    
+    const result = await Heroes.create(hero)
+
+    if(result){
+        return res.status(200).json({msg : "Berhasil Insert"})
+    }else{
+        return res.status(400).json({msg : "Gagal Insert"})
+    } 
+
+}
+
 module.exports = {
     getAll_heroes,
     delete_heroes,
-    getNamaHero
+    getNamaHero,
+    addHero
 }
