@@ -24,7 +24,7 @@ const getTeamsById = async (req,res) => {
     
     const result = await Teams.findById(req.params.id)
 
-    return res.status(200).json(result.teamMembers)
+    return res.status(200).json(result)
 }
 
 const approved = async (req,res) => {
