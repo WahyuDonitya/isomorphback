@@ -1,3 +1,4 @@
+const { response } = require("express");
 const { Teams } = require("../models");
 
 const addTeams = async (req,res) => {
@@ -36,9 +37,47 @@ const approved = async (req,res) => {
     
 }
 
+const reject = async (req,res) => {
+    const id = req.params.id
+
+    const updateTeams = await Teams.findByIdAndUpdate(id , {status : 2}, {new: true})
+
+    return res.status(201).json({msg : "Berhasil Update"})
+    
+}
+
+const getCountallApproval = async(req,res) => {
+    const result = await Teams.countDocuments()
+
+    return res.status(200).json(result)
+}
+
+const getCountallNeedApproval = async(req,res) => {
+    const result = await Teams.where("status",0).countDocuments()
+
+    return res.status(200).json(result)
+}
+
+const getCountallApproved = async(req,res) => {
+    const result = await Teams.where("status",1).countDocuments()
+
+    return res.status(200).json(result)
+}
+
+const getCountallRejected = async(req,res) => {
+    const result = await Teams.where("status",2).countDocuments()
+
+    return res.status(200).json(result)
+}
+
 module.exports = {
     addTeams,
     getNeedApprove,
     approved,
-    getTeamsById
+    getTeamsById,
+    getCountallApproval,
+    getCountallNeedApproval,
+    getCountallApproved,
+    getCountallRejected,
+    reject
 }
