@@ -47,27 +47,12 @@ const reject = async (req,res) => {
 }
 
 const getCountallApproval = async(req,res) => {
-    const result = await Teams.countDocuments()
+    const countApproval = await Teams.countDocuments()
+    const needApproval = await Teams.where("status",0).countDocuments()
+    const allApproved = await Teams.where("status",1).countDocuments()
+    const allRejected = await Teams.where("status",2).countDocuments()
 
-    return res.status(200).json(result)
-}
-
-const getCountallNeedApproval = async(req,res) => {
-    const result = await Teams.where("status",0).countDocuments()
-
-    return res.status(200).json(result)
-}
-
-const getCountallApproved = async(req,res) => {
-    const result = await Teams.where("status",1).countDocuments()
-
-    return res.status(200).json(result)
-}
-
-const getCountallRejected = async(req,res) => {
-    const result = await Teams.where("status",2).countDocuments()
-
-    return res.status(200).json(result)
+    return res.status(200).json({data:{countApproval:countApproval,needApproval:needApproval,allApproved:allApproved,allRejected:allRejected}})
 }
 
 module.exports = {
@@ -76,8 +61,5 @@ module.exports = {
     approved,
     getTeamsById,
     getCountallApproval,
-    getCountallNeedApproval,
-    getCountallApproved,
-    getCountallRejected,
     reject
 }
