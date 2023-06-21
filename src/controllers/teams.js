@@ -55,11 +55,23 @@ const getCountallApproval = async(req,res) => {
     return res.status(200).json({data:{countApproval:countApproval,needApproval:needApproval,allApproved:allApproved,allRejected:allRejected}})
 }
 
+const getLogin = async(req,res) => {
+    const name = req.params.name
+    console.log(name);
+    const countApproval = await Teams.countDocuments({ teamleader: name })
+    const needApproval = await Teams.where("status",0).where("teamleader",name).countDocuments()
+    const allApproved = await Teams.where("status",1).where("teamleader",name).countDocuments()
+    const allRejected = await Teams.where("status",2).where("teamleader",name).countDocuments()
+
+    return res.status(200).json({data:{countApproval:countApproval,needApproval:needApproval,allApproved:allApproved,allRejected:allRejected}})
+}
+
 module.exports = {
     addTeams,
     getNeedApprove,
     approved,
     getTeamsById,
     getCountallApproval,
-    reject
+    reject,
+    getLogin
 }
